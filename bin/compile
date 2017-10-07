@@ -35,7 +35,7 @@ mkdir -p $output_dir
 mkdir -p $temp_app_dir
 
 echo "Downloading libvips and unpacking" | indent
-curl -s $LIBVIPS_TARBALL | tar xz -C $output_dir
+curl -sL $LIBVIPS_TARBALL | tar xz -C $output_dir
 
 if [ $? != 0 ]; then
   echo "Error downloading libvips and unpacking to build dir" | indent
