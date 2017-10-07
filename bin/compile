@@ -5,6 +5,8 @@
 # libvips install
 #
 
+LIBVIPS_TARBALL="https://github.com/h2non/heroku-buildpack-imaginary/releases/download/0.1.0/libvips-heroku.tar.gz"
+
 function indent() {
   c='s/^/       /'
   case $(uname) in
@@ -33,19 +35,13 @@ mkdir -p $output_dir
 mkdir -p $temp_app_dir
 
 echo "Downloading libvips and unpacking" | indent
-curl -s https://s3-eu-west-1.amazonaws.com/visup-misc/heroku-buildpack-vips/201503311000.tar.gz | tar xz -C $output_dir
+curl -s $LIBVIPS_TARBALL | tar xz -C $output_dir
 
 if [ $? != 0 ]; then
-  echo "Error downloading vips and unpacking to build dir" | indent
+  echo "Error downloading libvips and unpacking to build dir" | indent
   exit 1
 fi
 
-curl -s https://s3-eu-west-1.amazonaws.com/visup-misc/heroku-buildpack-vips/201503311000.tar.gz | tar xz -C $temp_app_dir
-
-if [ $? != 0 ]; then
-  echo "Error downloading vips and unpacking to app dir" | indent
-  exit 1
-fi
 mkdir -p $BUILD_DIR/bin/
 cp -r $output_dir/bin/* $BUILD_DIR/bin/
 
